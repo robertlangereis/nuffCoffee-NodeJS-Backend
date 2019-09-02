@@ -8,7 +8,7 @@ import { Coffee } from '../coffee/entities';
 export default class User extends BaseEntity {
 
   @PrimaryGeneratedColumn()
-  userId?: number
+  id?: number
 
   @IsString()
   @MinLength(3)

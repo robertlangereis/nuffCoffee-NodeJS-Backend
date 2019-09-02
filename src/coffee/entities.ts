@@ -25,11 +25,11 @@ export class Coffee extends BaseEntity {
   // this is a relation, read more about them here:
   // http://typeorm.io/#/many-to-one-one-to-many-relations
   
-  @ManyToOne(_ => User, user => user.coffee, {eager: true})
+  @ManyToOne(_ => User, user => user.coffee)
   user: User
 
-  @OneToMany(_ => CoffeeType, coffeetype => coffeetype.coffee, {eager: true})
-  coffeetype: CoffeeType
+  @OneToOne(_ => CoffeeType, coffeetype => coffeetype.coffee, {cascadeUpdate: true})
+  coffeetype: CoffeeType[]
 }
 
 @Entity()
@@ -52,7 +52,6 @@ export class CoffeeType extends BaseEntity {
   // this is a relation, read more about them here:
   // http://typeorm.io/#/many-to-one-one-to-many-relations
 
-  @ManyToOne(_ => Coffee, coffee => coffee.coffeetype, {eager: true})
-  coffee: Coffee[]
-  
+  @OneToOne(_ => Coffee, coffee => coffee.coffeetype, {eager: true})
+  coffee: Coffee
 }
