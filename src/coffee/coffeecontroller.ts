@@ -26,22 +26,25 @@ export default class CoffeeController {
     return coffee
   }
 
-  // CREATE COFFEEE
+  // CREATE COFFEEE LOG
   @Authorized()
   @Post(':coffeeTypeId/coffee')
   @HttpCode(201)
   async createCoffee(
     @Param('coffeeTypeId') coffeeTypeId: any,
-    // @Body() data: any,
+    @Body() data: any,
     @CurrentUser() user: User)
     : Promise<Coffee> {  
+      const {timeAdded, doubleShot} = data
       const coffeetype = await CoffeeType.findOneById(coffeeTypeId)
       if (!coffeetype) throw new NotFoundError('We promised you coffee, but could not find it 😱')
       console.log('coffeetype', coffeetype);
       !await user.password
       const entity = await Coffee.create({
       coffeetype,
-      user
+      doubleShot,
+      user,
+      timeAdded
     }).save()
     const newCoffee = await Coffee.findOneById(entity.coffeeId)
     
@@ -64,7 +67,7 @@ export default class CoffeeController {
       console.log(update, "update")
       console.log(coffee, "coffee")
       if (!coffee) throw new BadRequestError('Omg, I think we lost your coffee!🙀')
-      if (coffee.user.userId === user.userId) return await Coffee.merge(coffee, update).save()
+      if (coffee.user === user) return await Coffee.merge(coffee, update).save()
       else throw new BadRequestError('You dont own this coffee biatch, so you cant edit nuthin')
     }
   }
