@@ -11,6 +11,33 @@ import User from "../users/entity";
 // import { text } from 'body-parser';
 
 @Entity()
+export class CoffeeType extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  coffeeTypeId?: number;
+
+  @IsString()
+  @Column()
+  coffeeName: string;
+
+  @IsString()
+  @Column({ nullable: true })
+  shopname: string;
+
+  @Column({ type: "int", nullable: true })
+  kcal: number;
+
+  @Column({ type: "int", nullable: true })
+  caffeineMg: number;
+
+  // this is a relation, read more about them here:
+  // http://typeorm.io/#/many-to-one-one-to-many-relations
+
+  @OneToMany(_ => Coffee, coffee => coffee.coffeetype)
+  coffee: Coffee[];
+}
+
+
+@Entity()
 export class Coffee extends BaseEntity {
   @PrimaryGeneratedColumn()
   coffeeId?: number;
@@ -35,38 +62,14 @@ export class Coffee extends BaseEntity {
   // this is a relation, read more about them here:
   // http://typeorm.io/#/many-to-one-one-to-many-relations
 
-  @ManyToOne(_ => User, user => user.coffee)
-  user: User;
-
+  
   @Column({ type: "int", nullable: true })
   doubleShot: number;
+  
+  @ManyToOne(_ => User, user => user.coffee)
+  user: User;
 
   @ManyToOne(_ => CoffeeType, coffeetype => coffeetype.coffee, { eager: true })
   coffeetype: CoffeeType;
 }
 
-@Entity()
-export class CoffeeType extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  coffeeTypeId?: number;
-
-  @IsString()
-  @Column()
-  coffeeName: string;
-
-  @IsString()
-  @Column({ nullable: true })
-  shopname: string;
-
-  @Column({ type: "int", nullable: true })
-  kcal: number;
-
-  @Column({ type: "int", nullable: true })
-  caffeineMg: number;
-
-  // this is a relation, read more about them here:
-  // http://typeorm.io/#/many-to-one-one-to-many-relations
-
-  @OneToMany(_ => Coffee, coffee => coffee.coffeetype)
-  coffee: Coffee;
-}
