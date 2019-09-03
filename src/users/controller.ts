@@ -9,10 +9,15 @@ export default class UserController {
   async signup(
     @Body() data: User
   ) {
+
     const {password, ...rest} = data
+    console.log('password', password);
+    console.log('rest', rest);
     const entity = User.create(rest)
+    console.log('entity', entity);
     await entity.setPassword(password)
     const user = await entity.save()
+    console.log('user', user);
 
     io.emit('action', {
       type: 'ADD_USER',
