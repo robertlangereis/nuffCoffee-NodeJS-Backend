@@ -10,11 +10,6 @@ export default class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id?: number
 
-  @IsString()
-  @MinLength(3)
-  @Column('text')
-  firstname: string
-
   @IsEmail()
   @Column('text')
   email: string
