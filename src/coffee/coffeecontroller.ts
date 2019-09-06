@@ -5,6 +5,7 @@ import { Coffee, CoffeeType } from './entities'
 // import {io} from '../index'
 
 type CoffeeList = Coffee[]
+type CoffeeTypeList = CoffeeType[]
 
 @JsonController()
 export default class CoffeeController {
@@ -14,6 +15,13 @@ export default class CoffeeController {
   async allCoffees(): Promise<CoffeeList> {
     const coffee = await Coffee.find()
     return coffee
+  }
+
+  // GET ALL COFFEETYPES
+  @Get('/coffeetypes')
+  async allCoffeeTypes(): Promise<CoffeeTypeList> {
+    const coffeetypes = await CoffeeType.find()
+    return coffeetypes
   }
 
   // GET COFFEE BY ID
