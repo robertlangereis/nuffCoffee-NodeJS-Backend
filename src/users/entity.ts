@@ -5,13 +5,13 @@ import {
   Column,
   OneToMany,
   ManyToMany,
-  JoinTable 
+  JoinTable
 } from "typeorm";
 import { Exclude } from "class-transformer";
 import { MinLength, IsString, IsEmail } from "class-validator";
 import * as bcrypt from "bcrypt";
-import Coffee from "../coffee/entities";
-import CoffeeType from "../coffeetypes/entities";
+import Coffee from "../coffee/entity";
+import CoffeeType from "../coffeetypes/entity";
 
 @Entity()
 export default class User extends BaseEntity {
@@ -36,13 +36,22 @@ export default class User extends BaseEntity {
   checkPassword(rawPassword: string): Promise<boolean> {
     return bcrypt.compare(rawPassword, this.password);
   }
-
   // this is a relation, read more about them here:
   // http://typeorm.io/#/many-to-one-one-to-many-relations
   @OneToMany(_ => Coffee, coffee => coffee.user, { eager: true })
   coffees: Coffee[];
 
-  @ManyToMany(_ => CoffeeType, coffeetypes => coffeetypes.user, { eager: true })
-  @JoinTable()
+  @ManyToMany(_ => CoffeeType, coffeetype => coffeetype.users)
+  @JoinTable({
+    name: "user_coffeetypes",
+    joinColumn: {
+      name: "userId",
+      referencedColumnName: "id"
+  },
+  inverseJoinColumn: {
+      name: "coffetypeId",
+      referencedColumnName: "id"
+  }
+  })
   coffeetypes: CoffeeType[];
 }

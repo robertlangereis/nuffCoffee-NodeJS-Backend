@@ -1,7 +1,8 @@
 import { 
   JsonController, Authorized, CurrentUser, Post, Param, BadRequestError, HttpCode, NotFoundError, Get, Body, Patch} from 'routing-controllers'
 import User from '../users/entity'
-import { Coffee, CoffeeType } from './entities'
+import Coffee from './entity'
+import CoffeeType from '../coffeetypes/entity'
 // import {io} from '../index'
 
 type CoffeeList = Coffee[]
@@ -54,7 +55,7 @@ export default class CoffeeController {
       user,
       timeAdded
     }).save()
-    const newCoffee = await Coffee.findOneById(entity.coffeeId)
+    const newCoffee = await Coffee.findOneById(entity.id)
     
     // io.emit('action', {
     //   type: 'ADD_COFFEE',

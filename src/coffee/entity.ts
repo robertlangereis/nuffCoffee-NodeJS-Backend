@@ -8,13 +8,13 @@ import {
 } from "typeorm";
 import { MinLength, IsString, MaxLength } from "class-validator";
 import User from "../users/entity";
-import CoffeeType from "../coffeetypes/entities";
+import CoffeeType from "../coffeetypes/entity";
 // import { text } from 'body-parser';
 
 @Entity()
 export default class Coffee extends BaseEntity {
   @PrimaryGeneratedColumn()
-  coffeeId?: number;
+  id?: number;
 
   @Column({
     type: "timestamp",

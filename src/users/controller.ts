@@ -1,6 +1,6 @@
 import { JsonController, Post, Param, Get, Body, Authorized } from 'routing-controllers'
 import User from './entity';
-import CoffeeType from '../coffeetypes/entities';
+import CoffeeType from '../coffeetypes/entity';
 import { io } from '../index'
 
 @JsonController()

@@ -9,13 +9,13 @@ import {
 } from "typeorm";
 import { MinLength, IsString, MaxLength } from "class-validator";
 import User from "../users/entity";
-import Coffee from "../coffee/entities";
+import Coffee from "../coffee/entity";
 // import { text } from 'body-parser';
 
 @Entity()
 export default class CoffeeType extends BaseEntity {
   @PrimaryGeneratedColumn()
-  coffeeTypeId?: number;
+  id?: number;
 
   @IsString()
   @Column()
@@ -36,6 +36,6 @@ export default class CoffeeType extends BaseEntity {
 
   @OneToMany(_ => Coffee, coffee => coffee.coffeetype)
   coffee: Coffee[];
-  @ManyToOne(_ => User, user => user.coffeetypes)
-  user: User;
+  @ManyToMany(_ => User, user => user.coffeetypes)
+  users: User[];
 }
