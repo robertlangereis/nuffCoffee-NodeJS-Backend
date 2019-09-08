@@ -1,6 +1,6 @@
 import { JsonController, Post, Param, Get, Body, Authorized } from 'routing-controllers'
 import User from './entity';
-import coffeetypes from './entity';
+import CoffeeType from '../coffeetypes/entities';
 import { io } from '../index'
 
 @JsonController()
@@ -8,20 +8,19 @@ export default class UserController {
 
   @Post('/users')
   async signup(
-  @Body() data: Promise<User>
+  @Body() data: User
   ) {
     const {password, email, ...rest} = data
-    const userSetup = new User();
-    userSetup.email = email;
-    userSetup.password = password;
-    const defaultCoffeeType = await coffeetypes.findByIds([1,2,3,4,5,6]);
+    const entity = await User.create(rest)
+    entity.email = email;
+    entity.password = password;
+    const defaultCoffeeType = await CoffeeType.findByIds([1,2,3,4,5,6]);
     const [cappuccino, latte, blackCoffee, espresso, americano, latteMacchiato] = defaultCoffeeType
-    userSetup.coffeetypes = [cappuccino, latte, blackCoffee, espresso, americano, latteMacchiato]
-    await userSetup.setPassword(password)
-    console.log('userSetup', userSetup);
-    const user = await userSetup.save()
+    entity.coffeetypes = [cappuccino, latte, blackCoffee, espresso, americano, latteMacchiato]
+    await entity.setPassword(password)
+    console.log('entity', entity);
+    const user = await entity.save()
     console.log('user', user);
-    // const entity = User.create(rest)
     // console.log('entity', entity);
 
     io.emit('action', {

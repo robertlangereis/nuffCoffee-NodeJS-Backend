@@ -10,7 +10,8 @@ import {
 import { Exclude } from "class-transformer";
 import { MinLength, IsString, IsEmail } from "class-validator";
 import * as bcrypt from "bcrypt";
-import { Coffee, CoffeeType } from "../coffee/entities";
+import Coffee from "../coffee/entities";
+import CoffeeType from "../coffeetypes/entities";
 
 @Entity()
 export default class User extends BaseEntity {

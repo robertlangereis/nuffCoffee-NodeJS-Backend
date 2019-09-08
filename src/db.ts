@@ -3,7 +3,8 @@ import { DefaultNamingStrategy } from 'typeorm/naming-strategy/DefaultNamingStra
 import { NamingStrategyInterface } from 'typeorm/naming-strategy/NamingStrategyInterface'
 import { snakeCase } from 'typeorm/util/StringUtils'
 import User from './users/entity'
-import { Coffee, CoffeeType } from './coffee/entities'
+import Coffee from './coffee/entities'
+import CoffeeType from './coffeetypes/entities'
 
 class CustomNamingStrategy extends DefaultNamingStrategy implements NamingStrategyInterface {
 
