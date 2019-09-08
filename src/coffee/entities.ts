@@ -4,7 +4,8 @@ import {
   Column,
   Entity,
   OneToMany,
-  ManyToOne
+  ManyToOne,
+  ManyToMany
 } from "typeorm";
 import { MinLength, IsString, MaxLength } from "class-validator";
 import User from "../users/entity";
@@ -34,6 +35,8 @@ export class CoffeeType extends BaseEntity {
 
   @OneToMany(_ => Coffee, coffee => coffee.coffeetype)
   coffee: Coffee[];
+  @ManyToOne(_ => User, user => user.coffeetypes)
+  user: User;
 }
 
 
@@ -66,10 +69,10 @@ export class Coffee extends BaseEntity {
   @Column({ type: "int", nullable: true })
   doubleShot: number;
   
-  @ManyToOne(_ => User, user => user.coffee)
+  @ManyToOne(_ => User, user => user.coffees)
   user: User;
 
-  @ManyToOne(_ => CoffeeType, coffeetype => coffeetype.coffee, { eager: true })
+  @ManyToMany(_ => CoffeeType, coffeetype => coffeetype.coffee, { eager: true })
   coffeetype: CoffeeType;
 }
 
