@@ -3,8 +3,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   Entity,
-  ManyToOne,
-  ManyToMany
+  ManyToOne
 } from "typeorm";
 import { MinLength, IsString, MaxLength } from "class-validator";
 import User from "../users/entity";
@@ -43,7 +42,7 @@ export default class Coffee extends BaseEntity {
   @ManyToOne(_ => User, user => user.coffees)
   user: User;
 
-  @ManyToMany(_ => CoffeeType, coffeetype => coffeetype.coffee, { eager: true })
+  @ManyToOne(_ => CoffeeType, coffeetype => coffeetype.coffee, { eager: true })
   coffeetype: CoffeeType;
 }
 

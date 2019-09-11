@@ -4,11 +4,10 @@ import {
   Column,
   Entity,
   OneToMany,
-  ManyToOne,
   JoinTable,
   ManyToMany
 } from "typeorm";
-import { MinLength, IsString, MaxLength } from "class-validator";
+import { IsString } from "class-validator";
 import User from "../users/entity";
 import Coffee from "../coffee/entity";
 // import { text } from 'body-parser';
@@ -38,17 +37,17 @@ export default class CoffeeType extends BaseEntity {
   @OneToMany(_ => Coffee, coffee => coffee.coffeetype)
   coffee!: Coffee[];
   
-  // @ManyToMany(_ => User, user => user.coffeetypes)
-  // @JoinTable({
-  //   name: "user_coffeetypes",
-  //   joinColumn: {
-  //     name: "coffetypeId",
-  //     referencedColumnName: "id"
-  // },
-  // inverseJoinColumn: {
-  //     name: "userId",
-  //     referencedColumnName: "id"
-  // }
-  // })
-  // users!: User[];
+  @ManyToMany(_ => User, user => user.coffeetypes)
+  @JoinTable({
+    name: "user_coffeetypes",
+    joinColumn: {
+      name: "coffetypeId",
+      referencedColumnName: "id"
+  },
+  inverseJoinColumn: {
+      name: "userId",
+      referencedColumnName: "id"
+  }
+  })
+  users!: User[];
 }

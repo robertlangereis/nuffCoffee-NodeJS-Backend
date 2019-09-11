@@ -39,16 +39,9 @@ export default class UserController {
     return User.findOneById(id)
   }
 
-  // @Authorized()
+  @Authorized()
   @Get('/users')
   allUsers() {
-    // console.log(joe)
-    // setTimeout(function(){ console.log(joe)}, 3000);
-    // return joe
-    // const joe = User.find({ relations: ["coffeetypes"] })
-    const joe = User.find()
-    // const peopls = User.find()
-    setTimeout(function(){ console.log(joe)}, 3000);
-    return joe
+    return User.find()
   }
 }

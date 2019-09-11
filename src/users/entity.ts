@@ -41,23 +41,17 @@ export default class User extends BaseEntity {
   @OneToMany(_ => Coffee, coffee => coffee.user, { eager: true })
   coffees!: Coffee[];
 
-
-  @ManyToMany(_ => CoffeeType)
-  @JoinTable()
+  @ManyToMany(_ => CoffeeType, coffeetype => coffeetype.users, { eager: true })
+  @JoinTable({
+    name: "user_coffeetypes",
+    joinColumn: {
+      name: "userId",
+      referencedColumnName: "id"
+  },
+  inverseJoinColumn: {
+      name: "coffetypeId",
+      referencedColumnName: "id"
+  }
+  })
   coffeetypes!: CoffeeType[];
-
-  // @ManyToMany(_ => CoffeeType, coffeetype => coffeetype.users, { eager: true })
-  // // @JoinTable()
-  // @JoinTable({
-  //   name: "user_coffeetypes",
-  //   joinColumn: {
-  //     name: "userId",
-  //     referencedColumnName: "id"
-  // },
-  // inverseJoinColumn: {
-  //     name: "coffetypeId",
-  //     referencedColumnName: "id"
-  // }
-  // })
-  // coffeetypes!: CoffeeType[];
 }
