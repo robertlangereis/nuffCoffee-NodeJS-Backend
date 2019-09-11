@@ -5,6 +5,7 @@ import {
   Entity,
   OneToMany,
   ManyToOne,
+  JoinTable,
   ManyToMany
 } from "typeorm";
 import { MinLength, IsString, MaxLength } from "class-validator";
@@ -19,23 +20,35 @@ export default class CoffeeType extends BaseEntity {
 
   @IsString()
   @Column()
-  coffeeName: string;
+  coffeeName!: string;
 
   @IsString()
   @Column({ nullable: true })
-  shopname: string;
+  shopname!: string;
 
   @Column({ type: "int", nullable: true })
-  kcal: number;
+  kcal!: number;
 
   @Column({ type: "int", nullable: true })
-  caffeineMg: number;
+  caffeineMg!: number;
 
   // this is a relation, read more about them here:
   // http://typeorm.io/#/many-to-one-one-to-many-relations
 
   @OneToMany(_ => Coffee, coffee => coffee.coffeetype)
-  coffee: Coffee[];
-  @ManyToMany(_ => User, user => user.coffeetypes)
-  users: User[];
+  coffee!: Coffee[];
+  
+  // @ManyToMany(_ => User, user => user.coffeetypes)
+  // @JoinTable({
+  //   name: "user_coffeetypes",
+  //   joinColumn: {
+  //     name: "coffetypeId",
+  //     referencedColumnName: "id"
+  // },
+  // inverseJoinColumn: {
+  //     name: "userId",
+  //     referencedColumnName: "id"
+  // }
+  // })
+  // users!: User[];
 }

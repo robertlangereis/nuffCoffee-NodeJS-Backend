@@ -20,13 +20,13 @@ export default class User extends BaseEntity {
 
   @IsEmail()
   @Column("text")
-  email: string;
+  email!: string;
 
   @IsString()
   @MinLength(3)
   @Column("text")
   @Exclude({ toPlainOnly: true })
-  password: string;
+  password!: string;
 
   async setPassword(rawPassword: string) {
     const hash = await bcrypt.hash(rawPassword, 10);
@@ -39,19 +39,25 @@ export default class User extends BaseEntity {
   // this is a relation, read more about them here:
   // http://typeorm.io/#/many-to-one-one-to-many-relations
   @OneToMany(_ => Coffee, coffee => coffee.user, { eager: true })
-  coffees: Coffee[];
+  coffees!: Coffee[];
 
-  @ManyToMany(_ => CoffeeType, coffeetype => coffeetype.users)
-  @JoinTable({
-    name: "user_coffeetypes",
-    joinColumn: {
-      name: "userId",
-      referencedColumnName: "id"
-  },
-  inverseJoinColumn: {
-      name: "coffetypeId",
-      referencedColumnName: "id"
-  }
-  })
-  coffeetypes: CoffeeType[];
+
+  @ManyToMany(_ => CoffeeType)
+  @JoinTable()
+  coffeetypes!: CoffeeType[];
+
+  // @ManyToMany(_ => CoffeeType, coffeetype => coffeetype.users, { eager: true })
+  // // @JoinTable()
+  // @JoinTable({
+  //   name: "user_coffeetypes",
+  //   joinColumn: {
+  //     name: "userId",
+  //     referencedColumnName: "id"
+  // },
+  // inverseJoinColumn: {
+  //     name: "coffetypeId",
+  //     referencedColumnName: "id"
+  // }
+  // })
+  // coffeetypes!: CoffeeType[];
 }

@@ -1,4 +1,4 @@
-import { createConnection } from 'typeorm'
+import { createConnection, getRepository } from 'typeorm'
 import { DefaultNamingStrategy } from 'typeorm/naming-strategy/DefaultNamingStrategy'
 import { NamingStrategyInterface } from 'typeorm/naming-strategy/NamingStrategyInterface'
 import { snakeCase } from 'typeorm/util/StringUtils'
@@ -26,6 +26,7 @@ class CustomNamingStrategy extends DefaultNamingStrategy implements NamingStrate
 }
 
 export default () =>
+
   createConnection({
     type: "postgres",
     url: process.env.DATABASE_URL || 'postgres://postgres:secret@localhost:5432/postgres',
