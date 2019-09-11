@@ -42,6 +42,7 @@ export default class UserController {
   @Authorized()
   @Get('/users')
   allUsers() {
+    console.log("incoming")
     return User.find()
   }
 }
