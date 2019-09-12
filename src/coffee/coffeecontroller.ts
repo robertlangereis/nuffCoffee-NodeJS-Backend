@@ -21,7 +21,7 @@ export default class CoffeeController {
   // GET ALL COFFEETYPES
   @Get('/coffeetypes')
   async allCoffeeTypes(): Promise<CoffeeTypeList> {
-    const coffeetypes = await CoffeeType.find()
+    const coffeetypes = await CoffeeType.find({order: {id: 'ASC'}})
     return coffeetypes
   }
 
